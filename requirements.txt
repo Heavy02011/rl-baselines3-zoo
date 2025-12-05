@@ -1,5 +1,7 @@
 gym==0.26.2
 stable-baselines3[extra,tests,docs]>=2.6.1a1,<3.0
+# sb3-contrib with GRPO support from fork
+sb3-contrib @ git+https://github.com/Heavy02011/stable-baselines3-contrib.git
 box2d-py==2.3.8
 pybullet_envs_gymnasium>=0.6.0
 # minigrid
