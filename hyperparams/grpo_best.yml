@@ -4,64 +4,22 @@
 # for stable training without requiring a learned value function.
 
 ## Custom envs - optimized hyperparameters
-#MountainCarContinuous-v0:
-#  n_timesteps: 200000
-#  policy: "MlpPolicy"
-#  n_envs: 1
-#
-#  batch_size_pow: 9
-#  n_steps_pow: 9
-#  one_minus_gamma: 0.01747096993621818
-#  one_minus_gae_lambda: 0.00026430446336942165
-#  learning_rate: 4.766087665224047e-05
-#  ent_coef: 2.68959217081452e-06
-#  clip_range: 0.1
-#  n_epochs: 5
-#  max_grad_norm: 0.5195698277124419
-#  net_arch: tiny
-#  activation_fn: relu
-
-
-grpo-MountainCar-v0:
-  n_timesteps: 200000
-  policy: "MlpPolicy"
-  n_envs: 1
-
-  # PPO/GRPO-similar Defaults
-  learning_rate: 3.0e-4
-  n_steps: 2048
-  batch_size: 512 #256
-  gamma: 0.9999
-  gae_lambda: 0.95
-  ent_coef: 0.1
-  vf_coef: 0.5
-  max_grad_norm: 0.5
-  clip_range: 0.2
-
-  # If your GRPO implementation has additional arguments:
-  # group_size: 4
-  # num_samples_per_step: 4
-
 MountainCarContinuous-v0:
   n_timesteps: 200000
   policy: "MlpPolicy"
   n_envs: 1
 
-  # PPO/GRPO-similar Defaults
-  learning_rate: 3.0e-4
-  n_steps: 2048
-  batch_size: 512 #256
-  gamma: 0.9999
-  gae_lambda: 0.95
-  ent_coef: 0.1
-  vf_coef: 0.5
-  max_grad_norm: 0.5
-  clip_range: 0.2
-
-  # If your GRPO implementation has additional arguments:
-  # group_size: 4
-  # num_samples_per_step: 4
-
+  batch_size_pow: 9
+  n_steps_pow: 9
+  #one_minus_gamma: 0.01747096993621818
+  #one_minus_gae_lambda: 0.00026430446336942165
+  learning_rate: 4.766087665224047e-05
+  ent_coef: 2.68959217081452e-06
+  clip_range: 0.1
+  n_epochs: 5
+  max_grad_norm: 0.5195698277124419
+  #net_arch: tiny
+  #activation_fn: relu
 
 #donkey-generated-track-v0:
 donkey-mountain-track-v0:
