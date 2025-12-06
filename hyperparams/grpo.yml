@@ -4,6 +4,26 @@
 # for stable training without requiring a learned value function.
 
 ## Custom envs
+grpo-MountainCar-v0:
+  n_timesteps: 200000
+  policy: "MlpPolicy"
+  n_envs: 1
+
+  # PPO/GRPO-similar Defaults
+  learning_rate: 3.0e-4
+  n_steps: 2048
+  batch_size: 512 #256
+  gamma: 0.9999
+  gae_lambda: 0.95
+  ent_coef: 0.1
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  clip_range: 0.2
+
+  # If your GRPO implementation has additional arguments:
+  # group_size: 4
+  # num_samples_per_step: 4
+
 MountainCarContinuous-v0:
   n_timesteps: 200000
   policy: "MlpPolicy"
