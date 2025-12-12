@@ -32,13 +32,13 @@ if [ -n "$WANDB_ENTITY" ]; then
         --track \
         --wandb-project-name "$WANDB_PROJECT" \
         --wandb-entity "$WANDB_ENTITY" \
-        --wandb-tags sac mountaincar comparison
+        --wandb-tags sac mountain_car comparison
 else
     python train.py --algo sac --env "$ENV_ID" \
         --seed $SEED \
         --track \
         --wandb-project-name "$WANDB_PROJECT" \
-        --wandb-tags sac mountaincar comparison
+        --wandb-tags sac mountain_car comparison
 fi
 
 # Train GRPO
@@ -50,13 +50,13 @@ if [ -n "$WANDB_ENTITY" ]; then
         --track \
         --wandb-project-name "$WANDB_PROJECT" \
         --wandb-entity "$WANDB_ENTITY" \
-        --wandb-tags grpo mountaincar comparison
+        --wandb-tags grpo mountain_car comparison
 else
     python train.py --algo grpo --env "$ENV_ID" \
         --seed $SEED \
         --track \
         --wandb-project-name "$WANDB_PROJECT" \
-        --wandb-tags grpo mountaincar comparison
+        --wandb-tags grpo mountain_car comparison
 fi
 
 # Train TQC
@@ -68,13 +68,13 @@ if [ -n "$WANDB_ENTITY" ]; then
         --track \
         --wandb-project-name "$WANDB_PROJECT" \
         --wandb-entity "$WANDB_ENTITY" \
-        --wandb-tags tqc mountaincar comparison
+        --wandb-tags tqc mountain_car comparison
 else
     python train.py --algo tqc --env "$ENV_ID" \
         --seed $SEED \
         --track \
         --wandb-project-name "$WANDB_PROJECT" \
-        --wandb-tags tqc mountaincar comparison
+        --wandb-tags tqc mountain_car comparison
 fi
 
 echo ""

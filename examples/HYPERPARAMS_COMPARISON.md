@@ -96,7 +96,7 @@ According to the [sac_vs_grpo.md](https://github.com/Heavy02011/stable-baselines
 
 > With these hyperparameters a recent run crossed 90 reward after ~60k steps (5 eval episodes), an order-of-magnitude reduction compared to the previous ~340k budget.
 
-The optimized GRPO parameters achieve approximately **5.6x faster convergence** compared to the previous configuration.
+Note: The "previous ~340k budget" refers to earlier, non-optimized GRPO configurations that required significantly more timesteps to solve the task. The optimized GRPO parameters achieve approximately **5.6x faster convergence** (60k vs 340k steps).
 
 ## References
 

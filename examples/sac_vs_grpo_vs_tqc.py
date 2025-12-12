@@ -70,6 +70,18 @@ def make_env(seed: int) -> gym.Env:
     return env
 
 
+def create_train_env(algo: str, seed: int, n_envs: int = 1):
+    """Create training environment based on algorithm type.
+    
+    Off-policy algorithms (SAC, TQC) use single env with replay buffer.
+    On-policy algorithms (GRPO) use vectorized env for parallel collection.
+    """
+    if algo in ("sac", "tqc"):
+        return make_env(seed)
+    else:  # On-policy algorithms like GRPO
+        return make_vec_env(ENV_ID, n_envs=n_envs, seed=seed)
+
+
 def train_until_solved(
     algo: str,
     max_timesteps: int,
@@ -80,9 +92,7 @@ def train_until_solved(
     n_envs: int = 1,
     wandb_run=None,
 ) -> tuple[RunStats, SAC | GRPO | TQC]:
-    # SAC and TQC train on a single monitored env (off-policy buffer handles decorrelation);
-    # GRPO follows its tuned on-policy setup with a vectorized env for stable batches.
-    train_env = make_env(seed) if algo in ("sac", "tqc") else make_vec_env(ENV_ID, n_envs=n_envs, seed=seed)
+    train_env = create_train_env(algo, seed, n_envs)
     eval_env = make_env(seed)
     
     if algo == "sac":
@@ -279,10 +289,9 @@ def main() -> None:
     # Log plot to wandb if available
     if wandb_run is not None:
         try:
-            import matplotlib.pyplot as plt
             wandb_run.log({"comparison_plot": wandb.Image(str(args.plot_path))})
-        except:
-            pass
+        except Exception as e:
+            print(f"Warning: Could not log plot to wandb: {e}")
 
     print("\n" + "="*60)
     print("Summary:")
@@ -300,8 +309,11 @@ def main() -> None:
         print(f"=> {winners} solved the task while others did not.")
     else:
         # All solved, compare timesteps to solve
-        fastest = min(solved_algos, key=lambda s: s.timesteps[-1] if s.timesteps else float('inf'))
-        print(f"=> All algorithms solved the task. {fastest.algo.upper()} was fastest with {fastest.timesteps[-1]} steps.")
+        def get_final_timesteps(s):
+            return s.timesteps[-1] if s.timesteps and len(s.timesteps) > 0 else float('inf')
+        fastest = min(solved_algos, key=get_final_timesteps)
+        if fastest.timesteps and len(fastest.timesteps) > 0:
+            print(f"=> All algorithms solved the task. {fastest.algo.upper()} was fastest with {fastest.timesteps[-1]} steps.")
     
     # Compare peak rewards
     if all(s.rewards for s in results):
