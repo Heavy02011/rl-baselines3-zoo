@@ -11,8 +11,8 @@ MountainCarContinuous-v0:
   gamma: 0.9999
   tau: 0.01
   learning_starts: 0
-  use_sde: True
-  policy_kwargs: "dict(log_std_init=-3.67, net_arch=[64, 64])"
+  use_sde: False  # Updated to match sac_vs_grpo.py reference
+  policy_kwargs: "dict(net_arch=[64, 64])"
 
 Pendulum-v1:
   # callback:
