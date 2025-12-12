@@ -13,42 +13,25 @@ Compare three state-of-the-art reinforcement learning algorithms on MountainCarC
 
 #### Files
 - `sac_vs_grpo_vs_tqc.md` - Documentation with hyperparameters and usage instructions
-- `sac_vs_grpo_vs_tqc.py` - Standalone Python script for side-by-side comparison
 - `train_mountain_car_all.sh` - Shell script to train all three algorithms using rl-zoo3
 
 #### Quick Start
 
-**Option 1: Standalone comparison script with wandb**
 ```bash
-# Install dependencies
-pip install stable-baselines3 sb3-contrib gymnasium wandb matplotlib
-
-# Run comparison
-python examples/sac_vs_grpo_vs_tqc.py \
-  --threshold 90 \
-  --max-timesteps 400000 \
-  --wandb-project-name rl-baselines3-zoo \
-  --wandb-entity <your-entity>
-```
-
-**Option 2: Using rl-zoo3 framework**
-```bash
-# Train all three algorithms sequentially
+# Train all three algorithms sequentially with wandb tracking
 bash examples/train_mountain_car_all.sh <your-wandb-entity>
 
-# Or train individually
+# Or train individually using rl-zoo3
 python train.py --algo sac --env MountainCarContinuous-v0 --track --wandb-project-name rl-baselines3-zoo
 python train.py --algo grpo --env MountainCarContinuous-v0 --track --wandb-project-name rl-baselines3-zoo
 python train.py --algo tqc --env MountainCarContinuous-v0 --track --wandb-project-name rl-baselines3-zoo
 ```
 
 #### Features
-- Side-by-side training comparison
-- Evaluation at regular intervals
-- Automatic threshold detection (stops when reward > 90)
-- WandB integration for experiment tracking
-- Comparison plot generation
-- Performance statistics (timesteps to solve, wallclock time, peak reward)
+- Training uses optimized hyperparameters from `hyperparams/` folder
+- WandB integration for experiment tracking and comparison
+- All rl-zoo3 features available (evaluation, checkpoints, logging, etc.)
+- Easy comparison of multiple algorithms on the same environment
 
 #### Hyperparameters
 

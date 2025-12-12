@@ -1,27 +1,38 @@
 # SAC vs. GRPO vs. TQC on MountainCarContinuous-v0
 
-This walkthrough trains **SAC**, **GRPO**, and **TQC** (from Stable-Baselines3 and sb3-contrib) side by side on `MountainCarContinuous-v0` until they exceed a reward of **90**. The helper script logs which algorithm solves the task faster and produces a compact plot with results tracked in wandb.ai.
+This example demonstrates training **SAC**, **GRPO**, and **TQC** (from Stable-Baselines3 and sb3-contrib) on `MountainCarContinuous-v0` using the rl-zoo3 framework with optimized hyperparameters. Results are tracked in wandb.ai for easy comparison.
 
-> This comparison example is based on the maintained SAC vs GRPO comparison from stable-baselines3-contrib, extended to include TQC and integrated with wandb.ai for experiment tracking.
+> This comparison example is based on the maintained SAC vs GRPO comparison from stable-baselines3-contrib, extended to include TQC and using the rl-zoo3 training framework.
 
 ## How to run
 
+**Train all three algorithms sequentially:**
 ```bash
-python examples/sac_vs_grpo_vs_tqc.py \
-  --threshold 90 \
-  --max-timesteps 400000 \
-  --eval-every 20000 \
-  --n-envs 8 \
-  --eval-episodes 5 \
-  --seed 0 \
+bash examples/train_mountain_car_all.sh <your-wandb-entity>
+```
+
+**Or train individually:**
+```bash
+# Train SAC
+python train.py --algo sac --env MountainCarContinuous-v0 \
+  --seed 0 --track \
+  --wandb-project-name rl-baselines3-zoo \
+  --wandb-entity <your-wandb-entity>
+
+# Train GRPO  
+python train.py --algo grpo --env MountainCarContinuous-v0 \
+  --seed 0 --track \
+  --wandb-project-name rl-baselines3-zoo \
+  --wandb-entity <your-wandb-entity>
+
+# Train TQC
+python train.py --algo tqc --env MountainCarContinuous-v0 \
+  --seed 0 --track \
   --wandb-project-name rl-baselines3-zoo \
   --wandb-entity <your-wandb-entity>
 ```
 
-- The script will print intermediate evaluation rewards for all three agents.
-- Training stops early as soon as the current agent crosses the reward threshold or the budget is spent.
-- A plot named `sac_vs_grpo_vs_tqc.png` is written next to the script (requires `matplotlib`).
-- Results are logged to wandb.ai for tracking and comparison.
+The hyperparameters are loaded from the `hyperparams/` folder and results are logged to wandb.ai for tracking and comparison.
 
 ## Hyperparameters
 
@@ -76,13 +87,13 @@ python examples/sac_vs_grpo_vs_tqc.py \
 
 ## Wandb Integration
 
-The script automatically logs:
-- Training progress for each algorithm
-- Evaluation rewards over time
-- Final statistics (best reward, timesteps to solve, wallclock time)
-- Comparison plot
+The rl-zoo3 framework automatically logs to wandb when using the `--track` flag:
+- Training progress and rewards
+- Evaluation metrics
+- Hyperparameters
+- System information
 
-To use wandb tracking, ensure you have:
-1. Installed wandb: `pip install wandb`
-2. Logged in: `wandb login`
-3. Provided the project name and entity (optional) as command-line arguments
+To use wandb tracking:
+1. Install wandb: `pip install wandb`
+2. Log in: `wandb login`
+3. Use the `--track` flag with `train.py` and provide project name and entity as shown above
